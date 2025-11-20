@@ -1,0 +1,15 @@
+<%- include ('components/header.ejs') %>
+<head>
+<title><%= title %></title>
+</head>
+<h1>welcome to the home page , brother</h1>
+<label for="list">list of products </label>
+X<ul>
+    <% if (Array.isArray(products) && products.length) { %>
+        <% products.forEach(function(product) { %>
+            <li><%= product.title %></li>
+        <% }) %>
+    <% } else { %>
+        <li>No products available</li>
+    <% } %>
+</ul>
