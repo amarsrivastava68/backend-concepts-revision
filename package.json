@@ -16,5 +16,10 @@
     "url": "https://github.com/amarsrivastava68/backend-concepts-revision/issues"
   },
   "homepage": "https://github.com/amarsrivastava68/backend-concepts-revision#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "swagger-autogen": "^2.23.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
 }
