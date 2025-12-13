@@ -1,11 +1,15 @@
 
 import express from "express";
-import { LoginUser, RegisterUser } from "../controllers/auth-controller.js";
+import authMiddleware from "../middleware/auth-middleware.js";
+import isAdminUser from "../middleware/admin-middleware.js";
 
 
 const adminRoutes = express.Router()
 
-adminRoutes.post('/login', LoginUser);
-adminRoutes.post('/register', RegisterUser)
+adminRoutes.get('/welcome', authMiddleware , isAdminUser ,  (req, res) => {
+    res.status(200).json({ message: "Welcome to the Admin Page!"
+        , userInfo: req.userInfo
+     });
+});
 
 export default adminRoutes;
