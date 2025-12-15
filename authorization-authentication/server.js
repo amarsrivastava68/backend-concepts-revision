@@ -4,10 +4,12 @@ import connectToDB from './database/db.js';
 import authRoutes from './routes/auth-routes.js';
 import homeRoutes from './routes/home-routes.js';
 import adminRoutes from './routes/admin-routes.js';
-
+import ImageUploadRouter from './routes/image-routes.js';
 connectToDB();
 dotenv.config();
 const app = express();
+app.use('/api/image' , ImageUploadRouter)
+
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
