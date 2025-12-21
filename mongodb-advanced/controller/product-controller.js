@@ -11,7 +11,7 @@ export const getProductStats = async(req,res)=>{
 
                { $group: 
 
-              {  _id: "$category" , 
+              {  _id: null , 
                 avgPrice : { $avg  :  "$price"}, 
                 totalValue : {$sum : "$price"} ,
                 count : { $sum : 1 }    
@@ -47,10 +47,33 @@ export const getProductAnalysis = async(req , res) => {
         const result = await Product.aggregate([
             { $match : { 
                 category : "Electronics"
-            }}
+            }} , 
+
+             { $group: 
+
+              {  _id: null , 
+                avgPrice : { $avg  :  "$price"}, 
+                totalValue : {$sum : "$price"} ,
+                maxValuedPrice : {$max : "$price"} ,
+                minValuedPrice : {$min : "$price"} ,
+                count : { $sum : 1 }    
+            
+            }
+            
+        } , 
+        {$project : {
+            _id: 0 , 
+            avgPrice : 1,
+            totalValue : 1 , 
+            maxValuedPrice :1   , minValuedPrice :1  , 
+            priceRange : {$subtract : ["$maxValuedPrice" , "$minValuedPrice"]}
+
+          
+        }}
+            
         ])
 
-        res.status(200).json({status : true , data : result })
+        res.status(200).json({status : true , records : result.length ,  data : result })
         
     } catch (error) {
         console.log(error)
