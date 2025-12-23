@@ -28,7 +28,8 @@ const checkFileTypeFilter = (req,file,cb)=>{
 
 //multer midleware
 
-export default multer({storage:strorage,
+export default multer({
+    storage:strorage,
     limits:{fileSize : 2048*2048},
     fileFilter: checkFileTypeFilter 
 })

@@ -3,7 +3,8 @@ import { uploadImage } from "../helpers/cloudinaryHelpers.js";
 
 export const uploadImageController = async (req, res) => {
     try {
-        //check if file is missing in request object 
+        console.log(req.file , 'from image controller')
+      
         if (!req.file) {
             return res.status(400).json({ message: "no file found", success: false });
         }

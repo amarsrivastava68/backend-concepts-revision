@@ -91,3 +91,42 @@ export const LoginUser = async (req , res)=> {
         
     }
 }
+
+export const changePassword  = async(req,res)=>{
+    try {
+        const { oldPassword , newPassword } = req.body ;
+        console.log(req.userInfo , 'line 98')
+        
+        const userId = req.userInfo.id;
+        console.log(userId)
+        const user = await User.findById(userId);
+        if(!user){
+            return res.status(404).json({
+                success:false,
+                message:'User not found'
+            })
+        }
+        const isPasswordCorrect = await bcrypt.compare(oldPassword,user.password);
+        if(!isPasswordCorrect){
+            return res.status(401).json({
+                success:false,
+                message:'Incorrect Password'
+            })
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashedNewPassword = await bcrypt.hash(newPassword,salt);
+        user.password = hashedNewPassword;
+        await user.save();
+        return res.status(200).json({
+            success:true,
+            message:'password changed successfully'
+        })  
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            success:false,
+            message:'Something went wrong'
+        });
+    } 
+    
+}
